@@ -4,6 +4,7 @@
  */
 package Modelo.Carreras;
 import Controlador.Carreras.clscarreras;
+import Controlador.Compras.clsFacturascompras;
 import Modelo.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -137,5 +138,37 @@ public class carrerasDAO {
         } catch (Exception e) {
             throw new RuntimeException("Error al eliminar factura", e);
         }
-    }      
+    }    
+    //busqueda por id
+    public clscarreras query(int codigo_carreras) {
+
+        clscarreras carreras = null;
+
+        String sql =
+                "SELECT * FROM facturascompras WHERE Faccomid=?";
+
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, codigo_carreras);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+
+                    carreras = new clscarreras();
+
+                    carreras.setCodigo_carrera(rs.getInt("codigo_carrera"));
+                    carreras.setNombre_carrera(rs.getString("nombre_carrera"));
+                    carreras.setCodigo_facultad(rs.getString("codigo_facultad"));
+                    carreras.setEstatus_carrera(rs.getString("estatus_carrera"));
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al consultar factura", e);
+        }
+
+        return carreras;
+    }
 }

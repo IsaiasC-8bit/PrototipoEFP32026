@@ -11,10 +11,20 @@ import Modelo.BitacoraDAO;
 import Controlador.clsSeguridad;
 import Controlador.clsUsuario;
 import Controlador.clsUsuarioConectado;
+import Vista.ComisionVenta.frmComisionesVentas;
+
+import Vista.vistaCuentasCorrientes.MdiGeneralCC;
+
+import Vista.Bancos.MdiBancos;
+import Vista.Logistica.MdiLogistica;
+
+import Vista.vistaPlanilla.MdiPlanillas;
+
 import java.awt.HeadlessException;
 import java.util.HashSet;
+
 import javax.swing.JOptionPane;
-import Vista.Carreras.MdiCarreras;
+import Vista.ComercialComprasyVentas.MdiComercio;
 /**
  *
  * @author visitante
@@ -201,24 +211,86 @@ public class frmLogin extends javax.swing.JFrame {
                     switch (areaSeleccionada) {
 
 
-        case "Carreras":
+        case "Bancos":
     try {
-        MdiCarreras menu = new MdiCarreras();
+        MdiBancos menu = new MdiBancos();
         menu.setVisible(true);
         this.dispose();
     } catch (Exception e) {
         System.out.println(e);
     }
     break;
-        case "Seguridad":
-            try {
-                MdiSeguridad menu = new MdiSeguridad();
-                menu.setVisible(true);
-                this.dispose();
-            } catch (Exception e) 
-            {
-                System.out.println(e);
-            }
+
+
+
+case "Cuentas Corrientes":
+    try {
+        MdiGeneralCC menu = new MdiGeneralCC();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
+
+case "Inventarios":
+    try {
+        JOptionPane.showMessageDialog(null, 
+            "Módulo de Inventarios aún no disponible", 
+            "Información", 
+            JOptionPane.INFORMATION_MESSAGE);
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
+
+case "Seguridad":
+    try {
+        MdiSeguridad menu = new MdiSeguridad();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
+
+case "Comercio":
+    try {
+        MdiComercio menu = new MdiComercio();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
+    
+case "Planillas":
+    try {
+        MdiPlanillas menu = new MdiPlanillas();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
+case "Comisiones de ventas":
+    try {
+         frmComisionesVentas menu = new frmComisionesVentas();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
+    case "Logistica":
+    try {
+         MdiLogistica menu = new MdiLogistica();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
 
 default:
     break;
