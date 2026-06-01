@@ -1,0 +1,32 @@
+commit ac67363d467ef2adaeef50ebb26d752afbec1fca
+Author: Isa <isaiascedillo1313@gmail.com>
+Date:   Mon Jun 1 16:02:19 2026 -0600
+
+    fix de dao
+
+commit 1b64ccd5fb9286d2201f5e67b278b70856c0103a
+Author: Isa <isaiascedillo1313@gmail.com>
+Date:   Mon Jun 1 11:48:43 2026 -0600
+
+    ramaContenedores
+
+commit 0ba7395182836e07590b18cbd2dd12f35d065ea1
+Merge: e72682d b5c4fbc
+Author: Isa <123830438+IsaiasC-8bit@users.noreply.github.com>
+Date:   Mon Jun 1 11:05:20 2026 -0600
+
+    Merge pull request #1 from IsaiasC-8bit/RamaSeguridad9959241672
+    
+    Creacion de MV//Bitacora
+
+commit b5c4fbccd4dd2e6ae9c4c2df378b7d5cf3179fbc
+Author: Isa <isaiascedillo1313@gmail.com>
+Date:   Mon Jun 1 11:04:34 2026 -0600
+
+    Creacion de MV//Bitacora
+
+commit e72682d1c72ab2517a33b55a55c4d758cf51fede
+Author: Isa <123830438+IsaiasC-8bit@users.noreply.github.com>
+Date:   Mon Jun 1 09:33:54 2026 -0600
+
+    Initial commit

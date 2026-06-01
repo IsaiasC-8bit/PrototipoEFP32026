@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import Modelo.carrerasDAO;
+import Controlador.clscarreras;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,8 +30,36 @@ public class frmcarreras extends javax.swing.JFrame {
      */
     public frmcarreras() {
         initComponents();
+        cargarTablaCarreras();
+    }
+    private void limpiarCampos() {
+    codigo_carrera_txt.setText("");
+    nombre_carrera_txt.setText("");
+    codigo_facultad_txt.setText("");
+    estatus_carrera_txt.setText("");
+        }
+    private void cargarTablaCarreras() {
+
+    DefaultTableModel modelo = new DefaultTableModel();
+
+    modelo.addColumn("Código");
+    modelo.addColumn("Nombre");
+    modelo.addColumn("Facultad");
+    modelo.addColumn("Estatus");
+
+    carrerasDAO dao = new carrerasDAO();
+
+    for (clscarreras carrera : dao.listar()) {
+        modelo.addRow(new Object[]{
+            carrera.getCodigo_carrera(),
+            carrera.getNombre_carrera(),
+            carrera.getCodigo_facultad(),
+            carrera.getEstatus_carrera()
+        });
     }
 
+    tablaCarreras.setModel(modelo);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,41 +70,123 @@ public class frmcarreras extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Register = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaCarreras = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
+        codigo_carrera_txt = new javax.swing.JTextField();
+        nombre_carrera_txt = new javax.swing.JTextField();
+        codigo_facultad_txt = new javax.swing.JTextField();
+        estatus_carrera_txt = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        borrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Reporte");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jButton2.setText("Ayudas");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        Register.setText("Crear");
+        Register.addActionListener(this::RegisterActionPerformed);
+
+        tablaCarreras.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo de Carrera", "Carrena nombre", "Facultad codigo", "Estatus Carrera"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaCarreras);
+
+        jButton3.setText("Ayudas");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+
+        jLabel1.setText("Codigo Carrera");
+
+        jLabel2.setText("Nombre Carrera");
+
+        jLabel3.setText("Facultad Codigo");
+
+        jLabel4.setText("Estatus Carrera");
+
+        borrar.setText("Borrar");
+        borrar.addActionListener(this::borrarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jButton1)
-                .addContainerGap(293, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(38, 38, 38)
-                    .addComponent(jButton2)
-                    .addContainerGap(290, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(jButton3)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Register)
+                        .addGap(18, 18, 18)
+                        .addComponent(borrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(codigo_carrera_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(nombre_carrera_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(codigo_facultad_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(estatus_carrera_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
+                .addGap(48, 48, 48)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(200, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(38, 38, 38)
-                    .addComponent(jButton2)
-                    .addContainerGap(239, Short.MAX_VALUE)))
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Register)
+                    .addComponent(borrar))
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codigo_carrera_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_carrera_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codigo_facultad_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(estatus_carrera_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -111,9 +224,147 @@ public class frmcarreras extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+         try {
+    // =========================
+    // VALIDAR CAMPOS VACÍOS
+    // =========================
+    if (codigo_carrera_txt.getText().trim().isEmpty()
+            || nombre_carrera_txt.getText().trim().isEmpty()
+            || codigo_facultad_txt.getText().trim().isEmpty()
+            || estatus_carrera_txt.getText().trim().isEmpty()) {
+
+        JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+        return;
+    }
+
+    // =========================
+    // OBTENER DATOS DEL FORMULARIO
+    // =========================
+    int codigoCarrera = Integer.parseInt(codigo_carrera_txt.getText().trim());
+    String nombreCarrera = nombre_carrera_txt.getText().trim();
+    String codigoFacultad = codigo_facultad_txt.getText().trim();
+    String estatusCarrera = estatus_carrera_txt.getText().trim();
+
+    // =========================
+    // CREAR OBJETO CARRERA
+    // =========================
+    clscarreras carrera = new clscarreras();
+
+    carrera.setCodigo_carrera(codigoCarrera);
+    carrera.setNombre_carrera(nombreCarrera);
+    carrera.setCodigo_facultad(codigoFacultad);
+    carrera.setEstatus_carrera(estatusCarrera);
+
+    // =========================
+    // INSERTAR CARRERA EN BD
+    // =========================
+    carrerasDAO dao = new carrerasDAO();
+
+    boolean resultado = dao.insert(carrera);
+
+    if (resultado) {
+        JOptionPane.showMessageDialog(null, "Carrera guardada correctamente");
+
+        // Si tienes estos métodos en tu formulario:
+        cargarTablaCarreras();
+        limpiarCampos();
+
+    } else {
+        JOptionPane.showMessageDialog(null, "No se pudo guardar la carrera");
+        cargarTablaCarreras();
+        limpiarCampos();
+
+    }
+
+} catch (NumberFormatException e) {
+
+    JOptionPane.showMessageDialog(null, "El código de carrera debe ser numérico");
+
+} catch (Exception e) {
+
+    JOptionPane.showMessageDialog(null, "Error al guardar la carrera: " + e.getMessage());
+    e.printStackTrace();
+}
+    }//GEN-LAST:event_RegisterActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
+        // TODO add your handling code here:
+        try {
+
+    // =========================
+    // VALIDAR CÓDIGO
+    // =========================
+    if (codigo_carrera_txt.getText().trim().isEmpty()) {
+
+        JOptionPane.showMessageDialog(
+                null,
+                "Seleccione o ingrese una carrera");
+
+        return;
+    }
+
+    // =========================
+    // OBTENER CÓDIGO DE CARRERA
+    // =========================
+    int codigoCarrera = Integer.parseInt(
+            codigo_carrera_txt.getText().trim()
+    );
+
+    // =========================
+    // CONFIRMACIÓN
+    // =========================
+    int respuesta = JOptionPane.showConfirmDialog(
+            null,
+            "¿Desea eliminar la carrera?",
+            "Confirmar",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if (respuesta != JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    // =========================
+    // DAO
+    // =========================
+    carrerasDAO dao = new carrerasDAO();
+
+    dao.delete(codigoCarrera);
+
+    // =========================
+    // MENSAJE Y ACTUALIZACIÓN
+    // =========================
+    JOptionPane.showMessageDialog(
+            null,
+            "Carrera eliminada correctamente"
+    );
+
+    cargarTablaCarreras();
+    limpiarCampos();
+
+} catch (NumberFormatException e) {
+
+    JOptionPane.showMessageDialog(
+            null,
+            "El código de carrera debe ser numérico"
+    );
+
+} catch (Exception e) {
+
+    e.printStackTrace();
+
+    JOptionPane.showMessageDialog(
+            null,
+            "Error al eliminar la carrera: " + e.getMessage()
+    );
+}
+    }//GEN-LAST:event_borrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,7 +392,19 @@ public class frmcarreras extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Register;
+    private javax.swing.JButton borrar;
+    private javax.swing.JTextField codigo_carrera_txt;
+    private javax.swing.JTextField codigo_facultad_txt;
+    private javax.swing.JTextField estatus_carrera_txt;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nombre_carrera_txt;
+    private javax.swing.JTable tablaCarreras;
     // End of variables declaration//GEN-END:variables
 }
