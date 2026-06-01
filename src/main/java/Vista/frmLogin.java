@@ -12,7 +12,7 @@ import Controlador.clsSeguridad;
 import Controlador.clsUsuario;
 import Controlador.clsUsuarioConectado;
 import Vista.ComisionVenta.frmComisionesVentas;
-
+import Vista.Carreras.MdiCarreras;
 import Vista.vistaCuentasCorrientes.MdiGeneralCC;
 
 import Vista.Bancos.MdiBancos;
@@ -62,6 +62,7 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cboOpciones = new javax.swing.JComboBox<>();
         ccontraseña = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +110,13 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Carreras");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,7 +125,8 @@ public class frmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -140,8 +149,10 @@ public class frmLogin extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(btnAceptar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton2)))))))
-                .addContainerGap(82, Short.MAX_VALUE))
+                                        .addComponent(jButton2)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,16 +167,22 @@ public class frmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(jButton2)
-                    .addComponent(ccontraseña))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAceptar)
+                            .addComponent(jButton2)
+                            .addComponent(ccontraseña))
+                        .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(40, 40, 40))))
         );
 
         pack();
@@ -220,9 +237,17 @@ public class frmLogin extends javax.swing.JFrame {
         System.out.println(e);
     }
     break;
-
-
-
+    
+      case "Carreras":
+    try {
+        MdiCarreras menu = new MdiCarreras();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    break;
+    
 case "Cuentas Corrientes":
     try {
         MdiGeneralCC menu = new MdiGeneralCC();
@@ -325,6 +350,42 @@ default:
         this.dispose();
     }//GEN-LAST:event_ccontraseñaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        clsUsuario usuario = new clsUsuario();
+          
+                usuario.setUsuNombre(txtUsuario.getText().trim());
+                // Recuperación de información a través de otro objeto
+                // se agrego codificacion de seguridad = David Rojas
+                clsSeguridad c = new clsSeguridad();
+                usuario.setUsuContrasena(c.encode(txtContraseña.getText()));
+                
+                usuario = usuario.getBuscarInformacionUsuarioPorNombre(usuario);
+                if (c.encode(txtContraseña.getText()).equals(usuario.getUsuContrasena()) && 
+                    txtUsuario.getText().equals(usuario.getUsuNombre())) {
+                    JOptionPane.showMessageDialog(null, "Bienvenido al SISTEMA\n", 
+                    "Mensaje de bienvenida", JOptionPane.INFORMATION_MESSAGE);
+                    MdiCarreras menu = new MdiCarreras();
+                    menu.setVisible(true);
+                    this.dispose();
+                    // registrando usuario conectado
+                    clsUsuarioConectado usuarioRegistrado = new clsUsuarioConectado();
+                    usuarioRegistrado.setUsuId(usuario.getUsuId());
+                    usuarioRegistrado.setUsuNombre(usuario.getUsuNombre());
+                    // Registro de Bitacora
+                    int resultadoBitacora=0;
+
+                     }
+                    else
+                    {
+                     JOptionPane.showMessageDialog(this, "ERROR AL ENCONTRAR USUARIO o CONTRASEÑA",                              "ERROR", JOptionPane.ERROR_MESSAGE);
+                    txtContraseña.setText("");
+                    txtUsuario.setText("");    
+                            
+                            }
+                
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -371,6 +432,7 @@ default:
     private javax.swing.JButton btnAceptar;
     private javax.swing.JComboBox<String> cboOpciones;
     private javax.swing.JButton ccontraseña;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
