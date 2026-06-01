@@ -65,7 +65,7 @@ public class MdiCarreras extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
        System.out.println("Carreras");
-        frmVentas ventana = new frmVentas();
+        frmcarreras ventana = new frmcarreras();
         Dimension FrameSize = ventana.getSize();
         ventana.setVisible(true);
        

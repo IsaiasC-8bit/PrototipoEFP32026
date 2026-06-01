@@ -4,8 +4,15 @@
  */
 package Vista.Carreras;
 
+import Modelo.Conexion;
 import java.io.File;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -32,27 +39,41 @@ public class frmcarreras extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Ayudas");
+        jButton1.setText("Reporte");
         jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setText("Ayudas");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(35, 35, 35)
                 .addComponent(jButton1)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addContainerGap(293, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(38, 38, 38)
+                    .addComponent(jButton2)
+                    .addContainerGap(290, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(77, 77, 77)
                 .addComponent(jButton1)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(38, 38, 38)
+                    .addComponent(jButton2)
+                    .addContainerGap(239, Short.MAX_VALUE)))
         );
 
         pack();
@@ -60,39 +81,39 @@ public class frmcarreras extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try {
-        File archivo = new File(
-            "src\\main\\java\\Ayudas\\Compras\\AyudaComprasHelp.chm"
-        );
+          try {
+        Conexion cn = new Conexion();
+        Connection con = cn.getConnection();
 
-        if (!archivo.exists()) {
-            JOptionPane.showMessageDialog(
-                null,
-                "La ayuda no fue encontrada en:\n" + archivo.getAbsolutePath()
-            );
+        if (con == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
             return;
         }
 
-        ProcessBuilder pb = new ProcessBuilder(
-            "cmd",
-            "/c",
-            "start",
-            "",
-            archivo.getAbsolutePath()
+        String rutaReporte = "src\\main\\java\\Reportes\\ComprayVentas\\reporteCompras.jasper";
+
+        Map<String, Object> parametros = new HashMap<>();
+
+        JasperPrint reporte = JasperFillManager.fillReport(
+                rutaReporte,
+                parametros,
+                con
         );
 
-        pb.start();
+        JasperViewer.viewReport(reporte, false);
 
-    } catch (Exception ex) {
-        ex.printStackTrace();
-
+    } catch (Exception e) {
         JOptionPane.showMessageDialog(
-            null,
-            "Error al abrir la ayuda:\n" + ex.getMessage()
+                null,
+                "Error al generar el reporte:\n" + e.getMessage()
         );
     }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -121,5 +142,6 @@ public class frmcarreras extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 }
