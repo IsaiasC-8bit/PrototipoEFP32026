@@ -39,7 +39,7 @@ public class carrerasDAO {
         List<clscarreras> lista = new ArrayList<>();
 
         String sql =
-                "SELECT codigo_carrera, nombre_carrera, codigo_facultad, estatus_carrera, "
+                "SELECT codigo_carrera, nombre_carrera, codigo_facultad, estatus_carrera "
               + "FROM carreras";
 
         try (Connection conn = Conexion.getConnection();
@@ -58,7 +58,7 @@ public class carrerasDAO {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al listar facturas", e);
+            throw new RuntimeException("Error al listar carreras", e);
         }
 
         return lista;
@@ -68,9 +68,9 @@ public class carrerasDAO {
       public boolean insert(clscarreras carrera) {
 
         String sql =
-                "INSERT INTO carreras"
-              + "(codigo_carrera,nombre_carrera,codigo_facultad,estatus_carrera) "
-              + "VALUES (?,?,?,?)";
+    "INSERT INTO carreras "
+  + "(codigo_carrera, nombre_carrera, codigo_facultad, estatus_carrera) "
+  + "VALUES (?, ?, ?, ?)";
 
         try (Connection conn = Conexion.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -93,31 +93,33 @@ public class carrerasDAO {
       }
           public void update(clscarreras carrera) {
 
-        String sql =
-                "UPDATE carreras SET "
-              + "codigo_carrera=?, "
-              + "nombre_carrera=?, "
-              + "codigo_facultad=?, "
-              + "estatus_carrera=?";
+    String sql =
+        "UPDATE carreras SET "
+      + "nombre_carrera=?, "
+      + "codigo_facultad=?, "
+      + "estatus_carrera=? "
+      + "WHERE codigo_carrera=?";
 
-        try (Connection conn = Conexion.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+    try (Connection conn = Conexion.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, carrera.getCodigo_carrera());
-            ps.setString(2, carrera.getNombre_carrera());
-            ps.setString(3, carrera.getCodigo_facultad());
-            ps.setString(4, carrera.getEstatus_carrera());
-            
-            int rows = ps.executeUpdate();
+        ps.setString(1, carrera.getNombre_carrera());
+        ps.setString(2, carrera.getCodigo_facultad());
+        ps.setString(3, carrera.getEstatus_carrera());
+        ps.setInt(4, carrera.getCodigo_carrera());
 
-            if (rows == 0) {
-                throw new RuntimeException("No se encontró la factura");
-            }
+        int rows = ps.executeUpdate();
 
-        } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar factura", e);
+        if (rows == 0) {
+            throw new RuntimeException("No se encontró la carrera");
         }
+
+        registrarBitacora("Actualizó la carrera: " + carrera.getNombre_carrera());
+
+    } catch (Exception e) {
+        throw new RuntimeException("Error al actualizar la carrera", e);
     }
+}
     public void delete(int codigo_carreras) {
 
         String sql =
@@ -131,11 +133,11 @@ public class carrerasDAO {
             int rows = ps.executeUpdate();
 
             if (rows == 0) {
-                throw new RuntimeException("No se encontró la factura");
+                throw new RuntimeException("No se encontró la carrera");
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al eliminar factura", e);
+            throw new RuntimeException("Error al eliminar carrera", e);
         }
     }      
 }
