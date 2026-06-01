@@ -63,5 +63,6 @@
             <artifactId>groovy</artifactId>
             <version>3.0.21</version>
         </dependency>
-    </dependencies>  
+    </dependencies>
+    <name>PrototipoEFP32026</name>
 </project>
